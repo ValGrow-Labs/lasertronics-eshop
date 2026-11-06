@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lasertronics E-Shop — Project Case Study | ValGrow Labs</title>
+  <meta name="description" content="Lasertronics E-Shop: A modern online store built by ValGrow Labs for Lasertronics (Pvt) Ltd." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --navy: #10224a;
+      --orange: #f58220;
+      --orange-hover: #e07216;
+      --page-bg: #f9fbfe;
+      --body-text: #3d4659;
+      --slate: #4a5468;
+      --light-blue-panel: #e9effb;
+      --light-blue-border: #d5e1f5;
+      --peach-panel: #fdeee4;
+      --peach-border: #f3d9c8;
+      --footer-bg: #f3f6fc;
+      --divider: #dfe5f1;
+      --divider-subtle: #e3e8f2;
+      --content-max-w: 1200px;
+      --radius-panel: 12px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 6px 20px rgba(16, 34, 74, 0.08);
+      --shadow-card: 0 4px 16px rgba(16, 34, 74, 0.06);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--page-bg);
+      color: var(--body-text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 150ms ease, background-color 150ms ease, transform 150ms ease;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--content-max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-wrap {
+      padding: 36px 0;
+      position: relative;
+    }
+
+    .section-tag-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .section-dash {
+      width: 24px;
+      height: 3px;
+      background-color: var(--orange);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .section-tag-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+    }
+
+    .section-tag-sm {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.01em;
+    }
+
+    /* 1. NAVBAR */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: #ffffff;
+      height: 72px;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .brand-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .brand-tag {
+      font-size: 9.5px;
+      font-weight: 500;
+      color: var(--slate);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-v-divider {
+      width: 1px;
+      height: 28px;
+      background-color: var(--divider);
+      flex-shrink: 0;
+    }
+
+    .nav-pill-casestudy {
+      display: inline-flex;
+      align-items: center;
+      background-color: #e8edf7;
+      color: var(--navy);
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 5px 15px;
+      border-radius: var(--radius-pill);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-domain {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .nav-domain:hover {
+      color: var(--orange);
+    }
+
+    .nav-domain svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 1.8;
+    }
+
+    .header-bottom-line {
+      position: absolute;
+      bottom: 0;
+      left: 3%;
+      right: 3%;
+      height: 1px;
+      background-color: var(--divider);
+    }
+
+    /* 2. HERO */
+    .hero-section {
+      position: relative;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      background-color: #f7f9fc;
+      background-image: 
+        radial-gradient(ellipse at 85% 15%, rgba(200, 222, 255, 0.45) 0%, rgba(235, 243, 255, 0.2) 50%, transparent 70%),
+        linear-gradient(135deg, #ffffff 0%, #f7f9fc 60%, #edf3fc 100%);
+      overflow: hidden;
+      border-bottom: 1px solid var(--divider-subtle);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 54fr 46fr;
+      gap: 40px;
+      min-height: 520px;
+      width: 100%;
+      align-items: center;
+      padding: 44px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-left-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .pill-orange-hero {
+      display: inline-flex;
+      align-items: center;
+      background-color: var(--orange);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 8px;
+      letter-spacing: 0.02em;
+      width: fit-content;
+      box-shadow: 0 3px 10px rgba(245, 130, 32, 0.35);
+    }
+
+    .hero-h1 {
+      font-size: clamp(40px, 4.2vw, 56px);
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-top: 2px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(16px, 1.7vw, 21px);
+      color: var(--slate);
+      line-height: 1.35;
+      font-weight: 400;
+    }
+
+    .accent-orange {
+      color: var(--orange);
+      font-weight: 700;
+    }
+
+    .hero-orange-bar {
+      width: 80px;
+      height: 3px;
+      background-color: var(--orange);
+      border-radius: 2px;
+      margin-top: 2px;
+    }
+
+    .hero-buttons-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-navy-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--navy);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 11px 24px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 4px 14px rgba(16, 34, 74, 0.22);
+    }
+
+    .btn-navy-pill:hover {
+      background-color: #172f63;
+      transform: translateY(-1px);
+    }
+
+    .btn-navy-pill svg {
+      width: 14px;
+      height: 14px;
+      stroke-width: 2;
+    }
+
+    .btn-softblue-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #e8edfb;
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 11px 24px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 2px 8px rgba(16, 34, 74, 0.08);
+    }
+
+    .btn-softblue-pill:hover {
+      background-color: #d6e2f7;
+      transform: translateY(-1px);
+    }
+
+    .hero-right-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .screenshot-card {
+      width: 100%;
+      border: 2px solid #10224a;
+      border-radius: 14px;
+      overflow: hidden;
+      background-color: #ffffff;
+      box-shadow: 0 14px 34px rgba(16, 34, 74, 0.18);
+      line-height: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .screenshot-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .hero-diagonal-accents {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: clamp(140px, 14vw, 220px);
+      height: clamp(90px, 18vh, 140px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-diagonal-accents svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* 3. PROJECT OVERVIEW */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 46fr 54fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .overview-left {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .overview-h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .overview-p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--body-text);
+    }
+
+    .overview-stats-panel {
+      background-color: var(--light-blue-panel);
+      border: 1px solid var(--light-blue-border);
+      border-radius: var(--radius-panel);
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      box-shadow: var(--shadow-card);
+    }
+
+    .stat-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 4px 12px;
+      border-right: 1px solid #dfe5f2;
+      gap: 6px;
+    }
+
+    .stat-column:last-child {
+      border-right: none;
+    }
+
+    .stat-icon {
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2px;
+    }
+
+    .stat-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke-width: 1.5;
+    }
+
+    .stat-label {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.01em;
+    }
+
+    .stat-value {
+      font-size: 12px;
+      color: var(--body-text);
+      line-height: 1.35;
+    }
+
+    /* 4. THE CHALLENGE & OUR SOLUTION */
+    .challenge-solution-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .challenge-panel {
+      background: linear-gradient(90deg, var(--peach-panel) 0%, #fff7f2 100%);
+      border: 1px solid var(--peach-border);
+      border-radius: var(--radius-panel);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .panel-head-icon {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-head-icon svg {
+      width: 24px;
+      height: 24px;
+      color: var(--orange);
+      stroke-width: 1.8;
+      flex-shrink: 0;
+    }
+
+    .panel-heading {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+    }
+
+    .challenge-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 2px;
+    }
+
+    .challenge-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--body-text);
+    }
+
+    .orange-bullet-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--orange);
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+
+    .solution-panel-card {
+      background-color: var(--light-blue-panel);
+      border: 1px solid var(--light-blue-border);
+      border-radius: var(--radius-panel);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .solution-panel-card .panel-head-icon svg {
+      width: 24px;
+      height: 24px;
+      color: var(--navy);
+      stroke-width: 1.8;
+      flex-shrink: 0;
+    }
+
+    .solution-paragraph {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--body-text);
+    }
+
+    /* 5. KEY FEATURES */
+    .features-grid-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 16px 0;
+      background: #ffffff;
+      border: 1px solid var(--divider-subtle);
+      border-radius: var(--radius-panel);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .feature-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 16px 14px;
+      border-right: 1px solid var(--divider-subtle);
+      gap: 8px;
+    }
+
+    .feature-col:last-child {
+      border-right: none;
+    }
+
+    .feature-icon-navy {
+      color: var(--navy);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .feature-icon-navy svg {
+      width: 32px;
+      height: 32px;
+      stroke-width: 1.5;
+    }
+
+    .feature-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.25;
+    }
+
+    .feature-desc {
+      font-size: 12px;
+      color: var(--slate);
+      line-height: 1.4;
+    }
+
+    /* 6. TECHNOLOGY STACK */
+    .tech-stack-strip {
+      background-color: #eef3fb;
+      border: 1px solid var(--divider-subtle);
+      border-radius: var(--radius-panel);
+      padding: 18px 24px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      align-items: center;
+      box-shadow: var(--shadow-card);
+    }
+
+    .tech-pill-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 6px 12px;
+      border-right: 1px solid var(--divider-subtle);
+    }
+
+    .tech-pill-item:last-child {
+      border-right: none;
+    }
+
+    .tech-logo-graphic {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tech-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* 7. RESULTS & IMPACT */
+    .results-panel-3 {
+      background: linear-gradient(90deg, #fff7f2 0%, #f7f9fd 50%, #edf4fe 100%);
+      border: 1px solid var(--divider-subtle);
+      border-radius: var(--radius-panel);
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      box-shadow: var(--shadow-card);
+    }
+
+    .result-col {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 6px 18px;
+      border-right: 1px solid var(--divider-subtle);
+    }
+
+    .result-col:last-child {
+      border-right: none;
+    }
+
+    .result-icon-orange {
+      color: var(--orange);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .result-icon-orange svg {
+      width: 28px;
+      height: 28px;
+      stroke-width: 1.5;
+    }
+
+    .result-text-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .result-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.01em;
+    }
+
+    .result-desc {
+      font-size: 13px;
+      color: var(--slate);
+      line-height: 1.4;
+    }
+
+    /* 8. CTA BANNER */
+    .cta-banner-panel {
+      background: linear-gradient(135deg, #10224a 0%, #172f63 100%);
+      border-radius: 16px;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      box-shadow: 0 12px 32px rgba(16, 34, 74, 0.22);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 90% 10%, rgba(245, 130, 32, 0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .cta-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 1;
+    }
+
+    .cta-h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .cta-desc {
+      font-size: 15px;
+      color: #cbd8ee;
+    }
+
+    .cta-right {
+      z-index: 1;
+      flex-shrink: 0;
+    }
+
+    .btn-cta-orange {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--orange);
+      color: #ffffff;
+      font-size: 14.5px;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 4px 14px rgba(245, 130, 32, 0.35);
+      white-space: nowrap;
+    }
+
+    .btn-cta-orange:hover {
+      background-color: var(--orange-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-cta-orange svg {
+      width: 15px;
+      height: 15px;
+      stroke-width: 2;
+    }
+
+    /* 9. FOOTER */
+    .site-footer {
+      background-color: var(--footer-bg);
+      border-top: 1px solid var(--divider-subtle);
+      padding: 36px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .footer-logo {
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .footer-v-divider {
+      width: 1px;
+      height: 48px;
+      background-color: #cbd5e1;
+      flex-shrink: 0;
+    }
+
+    .footer-credit-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .footer-credit-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .footer-credit-title strong {
+      color: var(--orange);
+      font-weight: 700;
+    }
+
+    .footer-credit-tagline {
+      font-size: 12px;
+      color: var(--slate);
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-shrink: 0;
+    }
+
+    .footer-contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .footer-contact-link:hover {
+      color: var(--orange);
+    }
+
+    .footer-contact-link svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 1.8;
+    }
+
+    .footer-corner-swoosh {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 11vw;
+      height: 100%;
+      min-width: 120px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .footer-corner-swoosh svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* MOTION & TRANSITIONS */
+    .fade-up-element {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fade-up-element.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fade-up-element {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* RESPONSIVE LAYOUT */
+    @media (max-width: 992px) {
+      .hero-grid, .overview-grid {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .features-grid-5 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .feature-col:nth-child(3) {
+        border-right: none;
+      }
+      .feature-col:nth-child(4), .feature-col:nth-child(5) {
+        border-top: 1px solid var(--divider-subtle);
+      }
+      .tech-stack-strip {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .tech-pill-item {
+        border-right: none;
+      }
+      .results-panel-3 {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .result-col {
+        border-right: none;
+        border-bottom: 1px solid var(--divider-subtle);
+        padding-bottom: 16px;
+      }
+      .result-col:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .cta-banner-panel, .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .cta-banner-panel {
+        padding: 32px 28px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .challenge-solution-grid, .overview-stats-panel, .features-grid-5, .tech-stack-strip {
+        grid-template-columns: 1fr;
+      }
+      .overview-stats-panel {
+        gap: 16px;
+      }
+      .stat-column {
+        border-right: none;
+        border-bottom: 1px solid #dfe5f2;
+        padding-bottom: 12px;
+      }
+      .stat-column:last-child, .feature-col:last-child {
+        border-bottom: none;
+      }
+      .feature-col {
+        border-right: none;
+        border-bottom: 1px solid var(--divider-subtle);
+      }
+      .tech-stack-strip {
+        gap: 8px;
+      }
+      .hero-h1 {
+        font-size: 34px;
+      }
+      .section-wrap {
+        padding: 28px 0;
+      }
+      .footer-left, .footer-right {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .footer-v-divider {
+        display: none;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .nav-v-divider, .nav-pill-casestudy {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. NAVBAR -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <div class="nav-left">
+        <a href="https://valgrowlabs.com" class="brand-group" target="_blank" rel="noopener noreferrer">
+          <img src="assets/logo.png" alt="ValGrow Labs Logo" class="brand-logo" />
+          <div class="brand-meta">
+            <span class="brand-name">ValGrow Labs</span>
+            <span class="brand-tag">AI Solutions Company</span>
+          </div>
+        </a>
+        <div class="nav-v-divider" aria-hidden="true"></div>
+        <span class="nav-pill-casestudy">Project Case Study</span>
+      </div>
+
+      <nav class="nav-right" aria-label="ValGrow Labs Website Link">
+        <a href="https://valgrowlabs.com" class="nav-domain" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+            <path d="M2 12h20" />
+          </svg>
+          <span>valgrowlabs.com</span>
+        </a>
+      </nav>
+    </div>
+    <div class="header-bottom-line" aria-hidden="true"></div>
+  </header>
+
+  <main>
+    <!-- 2. HERO -->
+    <section class="hero-section" id="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-left-content fade-up-element">
+            <div>
+              <span class="pill-orange-hero">E-Commerce Platform</span>
+            </div>
+            <h1 class="hero-h1">Lasertronics E-Shop</h1>
+            <p class="hero-subtitle">
+              A modern online store built by <strong class="accent-orange">ValGrow Labs</strong><br />
+              for Lasertronics (Pvt) Ltd.
+            </p>
+            <div class="hero-orange-bar" aria-hidden="true"></div>
+
+            <div class="hero-buttons-row">
+              <a href="https://lasertronics.lk" target="_blank" rel="noopener noreferrer" class="btn-navy-pill">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                </svg>
+                <span>View Live Project →</span>
+              </a>
+              <a href="#overview" class="btn-softblue-pill">
+                <span>Project Case Study</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-right-col fade-up-element">
+            <div class="screenshot-card">
+              <img 
+                src="assets/desktop.png" 
+                alt="Lasertronics E-Shop Desktop Interface Preview" 
+                class="screenshot-img" 
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-diagonal-accents" aria-hidden="true">
+        <svg viewBox="0 0 200 140" fill="none" preserveAspectRatio="none">
+          <polygon points="60,140 200,25 200,85 115,140" fill="#f58220" />
+          <polygon points="115,140 200,85 200,140" fill="#10224a" />
+        </svg>
+      </div>
+    </section>
+
+    <!-- 3. PROJECT OVERVIEW -->
+    <section class="section-wrap" id="overview">
+      <div class="container">
+        <div class="overview-grid fade-up-element">
+          <div class="overview-left">
+            <div class="section-tag-head" style="margin-bottom: 6px;">
+              <div class="section-dash" aria-hidden="true"></div>
+              <span class="section-tag-sm">Project Overview</span>
+            </div>
+            <h2 class="overview-h2">About the Project</h2>
+            <p class="overview-p">
+              Lasertronics E-Shop is a high-performance e-commerce platform for Lasertronics (Pvt) Ltd., serving electronics engineers, researchers and technicians across Sri Lanka.
+            </p>
+          </div>
+
+          <div class="overview-stats-panel">
+            <div class="stat-column">
+              <div class="stat-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-4.5a1.724 1.724 0 0 1 1.542 0L21.75 12M2.25 12l8.954 4.5a1.724 1.724 0 0 0 1.542 0L21.75 12M2.25 12v4.5a1.724 1.724 0 0 0 .97 1.536l7.984 4.015a1.724 1.724 0 0 0 1.542 0l7.984-4.015a1.724 1.724 0 0 0 .97-1.536V12" />
+                </svg>
+              </div>
+              <span class="stat-label">Industry</span>
+              <span class="stat-value">Electronics</span>
+            </div>
+
+            <div class="stat-column">
+              <div class="stat-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="8" cy="21" r="1"></circle>
+                  <circle cx="19" cy="21" r="1"></circle>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                </svg>
+              </div>
+              <span class="stat-label">Project Type</span>
+              <span class="stat-value">E-Commerce Platform</span>
+            </div>
+
+            <div class="stat-column">
+              <div class="stat-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+                </svg>
+              </div>
+              <span class="stat-label">Outcome</span>
+              <span class="stat-value">Faster, simpler &amp; more reliable online purchasing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. CHALLENGE & SOLUTION -->
+    <section class="section-wrap" id="challenge">
+      <div class="container">
+        <div class="challenge-solution-grid fade-up-element">
+          <article class="challenge-panel">
+            <div class="panel-head-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+              </svg>
+              <h3 class="panel-heading">The Challenge</h3>
+            </div>
+            <ul class="challenge-bullets">
+              <li>
+                <span class="orange-bullet-dot" aria-hidden="true"></span>
+                <span>Manual counter recordkeeping for 1,200+ SKUs</span>
+              </li>
+              <li>
+                <span class="orange-bullet-dot" aria-hidden="true"></span>
+                <span>Order handling and stock updates were time-consuming</span>
+              </li>
+              <li>
+                <span class="orange-bullet-dot" aria-hidden="true"></span>
+                <span>Pricing updates were often delayed</span>
+              </li>
+            </ul>
+          </article>
+
+          <article class="solution-panel-card">
+            <div class="panel-head-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.439a3.75 3.75 0 0 1-4.5 0m4.5 0v.75A2.25 2.25 0 0 1 12 23.25h0A2.25 2.25 0 0 1 9.75 21v-.75m7.5-7.5a6 6 0 1 0-10.5 0c1.077.92 1.5 2.08 1.5 3.75h7.5c0-1.67.423-2.83 1.5-3.75Z" />
+              </svg>
+              <h3 class="panel-heading">Our Solution</h3>
+            </div>
+            <p class="solution-paragraph">
+              ValGrow Labs developed an integrated e-commerce platform with real-time InTouch ERP sync, instant search and WhatsApp checkout, giving Lasertronics a faster, more accurate and customer-friendly digital store.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. KEY FEATURES -->
+    <section class="section-wrap" id="features">
+      <div class="container">
+        <div class="section-tag-head fade-up-element">
+          <div class="section-dash" aria-hidden="true"></div>
+          <h2 class="section-tag-title">Key Features</h2>
+        </div>
+
+        <div class="features-grid-5 fade-up-element">
+          <div class="feature-col">
+            <div class="feature-icon-navy" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle cx="8" cy="21" r="1"></circle>
+                <circle cx="19" cy="21" r="1"></circle>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">Live ERP Stock &amp;<br />LKR Pricing</h3>
+            <p class="feature-desc">Real-time stock sync with accurate LKR pricing.</p>
+          </div>
+
+          <div class="feature-col">
+            <div class="feature-icon-navy" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.3-4.3"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">Instant<br />Search</h3>
+            <p class="feature-desc">Find products quickly with smart, fast search.</p>
+          </div>
+
+          <div class="feature-col">
+            <div class="feature-icon-navy" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">WhatsApp<br />Checkout</h3>
+            <p class="feature-desc">Place orders easily via WhatsApp.</p>
+          </div>
+
+          <div class="feature-col">
+            <div class="feature-icon-navy" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect width="14" height="20" x="5" y="2" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">PWA<br />Support</h3>
+            <p class="feature-desc">Installable, app-like experience on mobile and desktop.</p>
+          </div>
+
+          <div class="feature-col">
+            <div class="feature-icon-navy" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+              </svg>
+            </div>
+            <h3 class="feature-title">Admin<br />Dashboard</h3>
+            <p class="feature-desc">Manage products, orders, pricing and stock in one place.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. TECHNOLOGY STACK -->
+    <section class="section-wrap" id="stack">
+      <div class="container">
+        <div class="section-tag-head fade-up-element">
+          <div class="section-dash" aria-hidden="true"></div>
+          <h2 class="section-tag-title">Technology Stack</h2>
+        </div>
+
+        <div class="tech-stack-strip fade-up-element">
+          <div class="tech-pill-item">
+            <div class="tech-logo-graphic" aria-hidden="true">
+              <svg width="26" height="26" viewBox="-11.5 -10.23174 23 20.46348" fill="#00D8FF">
+                <circle cx="0" cy="0" r="2.05" fill="#00D8FF" />
+                <g stroke="#00D8FF" stroke-width="1.2" fill="none">
+                  <ellipse rx="11" ry="4.2" />
+                  <ellipse rx="11" ry="4.2" transform="rotate(60)" />
+                  <ellipse rx="11" ry="4.2" transform="rotate(120)" />
+                </g>
+              </svg>
+            </div>
+            <span class="tech-name">React 19</span>
+          </div>
+
+          <div class="tech-pill-item">
+            <div class="tech-logo-graphic" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24">
+                <rect width="24" height="24" rx="4" fill="#3178C6" />
+                <path d="M11.5 8.5H5.5V10.2H7.5V17H9.5V10.2H11.5V8.5Z" fill="white" />
+                <path d="M13.5 15.2C14 15.6 14.7 15.8 15.4 15.8C16.2 15.8 16.7 15.4 16.7 14.8C16.7 14.3 16.4 14 15.3 13.5C13.8 12.9 12.8 12.3 12.8 10.9C12.8 9.5 13.9 8.5 15.6 8.5C16.6 8.5 17.5 8.8 18.2 9.3L17.4 10.8C16.8 10.4 16.2 10.2 15.6 10.2C14.9 10.2 14.5 10.5 14.5 11C14.5 11.5 14.8 11.8 16 12.3C17.6 13 18.5 13.6 18.5 14.9C18.5 16.4 17.3 17.4 15.3 17.4C14.2 17.4 13.1 17 12.4 16.4L13.5 15.2Z" fill="white" />
+              </svg>
+            </div>
+            <span class="tech-name">TypeScript</span>
+          </div>
+
+          <div class="tech-pill-item">
+            <div class="tech-logo-graphic" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="#38BDF8">
+                <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.336 6.182 14.975 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.336 13.382 8.975 12 6.001 12z" />
+              </svg>
+            </div>
+            <span class="tech-name">Tailwind CSS</span>
+          </div>
+
+          <div class="tech-pill-item">
+            <div class="tech-logo-graphic" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="#5FA04E">
+                <path d="M12 2l9 5.2v10.4L12 23l-9-5.4V7.2L12 2zm0 2.2L5 8.2v7.6l7 4.2 7-4.2V8.2L12 4.2z" />
+                <circle cx="12" cy="12" r="3.2" fill="#5FA04E" />
+              </svg>
+            </div>
+            <span class="tech-name">Node.js</span>
+          </div>
+
+          <div class="tech-pill-item">
+            <div class="tech-logo-graphic" aria-hidden="true">
+              <div style="width:24px;height:24px;border-radius:5px;background:#0284C7;color:white;font-weight:900;font-size:11px;display:flex;align-items:center;justify-content:center;letter-spacing:-0.05em;">IN</div>
+            </div>
+            <span class="tech-name">InTouch ERP</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. RESULTS & IMPACT -->
+    <section class="section-wrap" id="results">
+      <div class="container">
+        <div class="section-tag-head fade-up-element">
+          <div class="section-dash" aria-hidden="true"></div>
+          <h2 class="section-tag-title">Results &amp; Impact</h2>
+        </div>
+
+        <div class="results-panel-3 fade-up-element">
+          <div class="result-col">
+            <div class="result-icon-orange" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m0 0L2.25 12l2.25-2.25m4.5 4.5L12 21.75l2.25-2.25" />
+              </svg>
+            </div>
+            <div class="result-text-block">
+              <h3 class="result-title">Faster Operations</h3>
+              <p class="result-desc">Streamlined ordering &amp; stock management</p>
+            </div>
+          </div>
+
+          <div class="result-col">
+            <div class="result-icon-orange" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+              </svg>
+            </div>
+            <div class="result-text-block">
+              <h3 class="result-title">Better Customer Experience</h3>
+              <p class="result-desc">Quick search and seamless checkout.</p>
+            </div>
+          </div>
+
+          <div class="result-col">
+            <div class="result-icon-orange" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-4.5a1.724 1.724 0 0 1 1.542 0L21.75 12M2.25 12l8.954 4.5a1.724 1.724 0 0 0 1.542 0L21.75 12M2.25 12v4.5a1.724 1.724 0 0 0 .97 1.536l7.984 4.015a1.724 1.724 0 0 0 1.542 0l7.984-4.015a1.724 1.724 0 0 0 .97-1.536V12" />
+              </svg>
+            </div>
+            <div class="result-text-block">
+              <h3 class="result-title">Scalable Platform</h3>
+              <p class="result-desc">Built for long-term growth &amp; product expansion</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. CTA BANNER -->
+    <section class="section-wrap" style="padding-bottom: 60px;" id="cta">
+      <div class="container">
+        <div class="cta-banner-panel fade-up-element">
+          <div class="cta-left">
+            <h2 class="cta-h2">Let's Build Your Next Digital Solution</h2>
+            <p class="cta-desc">Transform your business with a custom web or mobile solution from ValGrow Labs.</p>
+          </div>
+          <div class="cta-right">
+            <a href="https://lasertronics.lk" target="_blank" rel="noopener noreferrer" class="btn-cta-orange">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+              </svg>
+              <span>View Live Project →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 9. FOOTER -->
+  <footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <a href="https://valgrowlabs.com" class="brand-group" target="_blank" rel="noopener noreferrer">
+          <img src="assets/logo.png" alt="ValGrow Labs Logo" class="footer-logo" />
+          <div class="brand-meta">
+            <span class="brand-name">ValGrow Labs</span>
+            <span class="brand-tag">AI Solutions Company</span>
+          </div>
+        </a>
+        <div class="footer-v-divider" aria-hidden="true"></div>
+        <div class="footer-credit-block">
+          <p class="footer-credit-title">
+            Designed &amp; Developed by <strong>ValGrow Labs</strong>
+          </p>
+          <p class="footer-credit-tagline">
+            We build innovative digital solutions that connect businesses with modern technology.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-right">
+        <a href="https://valgrowlabs.com" class="footer-contact-link" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+            <path d="M2 12h20" />
+          </svg>
+          <span>valgrowlabs.com</span>
+        </a>
+        <a href="mailto:hello@valgrowlabs.com" class="footer-contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+          </svg>
+          <span>hello@valgrowlabs.com</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-corner-swoosh" aria-hidden="true">
+      <svg viewBox="0 0 180 110" fill="none" preserveAspectRatio="none">
+        <polygon points="65,110 180,15 180,110" fill="#10224a" />
+        <polygon points="0,110 65,110 180,15 180,0 125,0" fill="#f58220" />
+      </svg>
+    </div>
+  </footer>
+
+  <script>
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -40px 0px'
+      });
+      document.querySelectorAll('.fade-up-element').forEach(el => observer.observe(el));
+    } else {
+      document.querySelectorAll('.fade-up-element').forEach(el => el.classList.add('is-visible'));
+    }
+  </script>
+</body>
+</html>

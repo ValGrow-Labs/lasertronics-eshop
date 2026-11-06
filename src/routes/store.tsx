@@ -1,0 +1,344 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  ArrowRight,
+  Truck,
+  ShieldCheck,
+  Headphones,
+  CreditCard,
+  Wrench,
+  Cpu,
+  Tv,
+  Smartphone,
+  CircuitBoard,
+  CheckCircle2,
+  Star,
+  Award,
+  PackageCheck,
+  Sparkles,
+} from "lucide-react";
+import { SiteLayout } from "@/components/layout/SiteLayout";
+import { Hero } from "@/components/home/Hero";
+import { CategoryRail } from "@/components/home/CategoryRail";
+import { ProductCard } from "@/components/ProductCard";
+import {
+  categories,
+  products as defaultFallbackProducts,
+  registerLiveProducts,
+  registerLiveCategories,
+  useStoreCategories,
+} from "@/data/products";
+import { fetchAllProductsFn, fetchAllCategoriesFn } from "@/lib/server-products";
+
+export const Route = createFileRoute("/store")({
+  loader: async () => {
+    try {
+      const [live, liveCats] = await Promise.all([
+        fetchAllProductsFn().catch(() => null),
+        fetchAllCategoriesFn().catch(() => null),
+      ]);
+      if (liveCats && liveCats.length > 0) {
+        registerLiveCategories(liveCats);
+      }
+      if (live && live.length > 0) {
+        registerLiveProducts(live);
+        return { liveProducts: live };
+      }
+    } catch (err) {
+      console.error("Index route live fetch error:", err);
+    }
+    return { liveProducts: defaultFallbackProducts };
+  },
+  head: () => ({
+    meta: [
+      { title: "LASERTRONICS PVT LTD | Electronics, IoT & Repair Store Sri Lanka" },
+      {
+        name: "description",
+        content:
+          "Shop mobile accessories, electronic components, TV accessories, IoT boards and repair kits in Sri Lanka. Genuine stock, LKR pricing, island-wide delivery.",
+      },
+      { property: "og:title", content: "LASERTRONICS PVT LTD | Electronics Store Sri Lanka" },
+      {
+        property: "og:description",
+        content:
+          "Components, accessories and bench tools for makers, technicians and businesses across Sri Lanka.",
+      },
+    ],
+  }),
+  component: Index,
+});
+
+const categoryIcons = [Smartphone, CircuitBoard, Tv, Cpu, Wrench];
+
+
+const solutionsList = [
+  {
+    title: "IoT Solutions",
+    copy: "Sensor nodes, gateways and cloud integration for agricultural and industrial deployments across Sri Lanka.",
+  },
+  {
+    title: "Embedded Systems",
+    copy: "Custom microcontrollers, hardware design and component selection for prototype and production runs.",
+  },
+  {
+    title: "Electronics Prototyping",
+    copy: "Passive components, sensors, PCBs and breadboarding supplies for labs, university projects and makers.",
+  },
+  {
+    title: "Repair & Maintenance",
+    copy: "Bench-grade tools, digital soldering stations and ESD supplies for service hubs and repair technicians.",
+  },
+];
+
+const whyChooseUsList = [
+  { icon: Truck, title: "Island-wide Delivery", desc: "Fast shipping to any location in Sri Lanka." },
+  { icon: ShieldCheck, title: "Genuine Warranty", desc: "Local warranty and technical service support." },
+  { icon: Headphones, title: "Engineer Support", desc: "Technical guidance directly from experienced builders." },
+  { icon: CreditCard, title: "Secure Payments", desc: "Encrypted checkout with multiple payment methods." },
+  { icon: PackageCheck, title: "Quality Products", desc: "Pre-tested electronic components and tools." },
+  { icon: Award, title: "Bulk Orders", desc: "Special pricing for educational labs and service centres." },
+];
+
+const testimonials = [
+  {
+    name: "Kamal Perera",
+    role: "Electronics Technician, Colombo",
+    review: "The digital soldering station and ESD tools are genuine bench grade. Delivered to Colombo in less than 24 hours.",
+    rating: 5,
+  },
+  {
+    name: "Dinesh Jayawardena",
+    role: "IoT Hardware Engineer",
+    review: "ESP32 boards and sensor modules arrived in great condition. Lasertronics PVT LTD is my go-to supplier for hardware prototypes.",
+    rating: 5,
+  },
+  {
+    name: "Nipuni Samarasinghe",
+    role: "University Robotics Lead",
+    review: "Super fast response from their team for our lab's bulk motor and component order. High quality customer service.",
+    rating: 5,
+  },
+];
+
+function Index() {
+  const { liveProducts } = Route.useLoaderData();
+  const categories = useStoreCategories();
+  const allProducts = (liveProducts && liveProducts.length > 0 ? liveProducts : defaultFallbackProducts).filter(
+    (p) => (p.stock || 0) > 0
+  );
+  registerLiveProducts(allProducts);
+  const newArrivals = allProducts.filter((p) => (p.stock || 0) > 0).slice(0, 6);
+
+  return (
+    <SiteLayout>
+      {/* 1. Hero Carousel */}
+      <Hero />
+
+      {/* 2. Shop by Category */}
+      <section className="container-page pt-6 sm:pt-10 lg:pt-12 pb-8 sm:pb-12 lg:pb-16">
+        <div className="text-center">
+          <span className="inline-block rounded-full border border-white/80 bg-white/70 px-3.5 py-1 text-xs font-extrabold uppercase tracking-[0.2em] text-primary shadow-xs backdrop-blur-md">
+            Curated Ranges
+          </span>
+          <h2 className="mt-2.5 font-display text-2xl font-extrabold tracking-tight sm:text-3xl text-foreground">
+            Shop by Category
+          </h2>
+          <p className="mx-auto mt-1.5 max-w-xl text-xs text-muted-foreground sm:text-sm">
+            Explore our curated electronics, components and accessories ranges for makers, technicians and businesses.
+          </p>
+        </div>
+
+        {/* Mobile: horizontal scroll strip | md+: responsive dynamic grid */}
+        <div className="mt-6 sm:mt-8 flex md:grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 overflow-x-auto md:overflow-visible pb-2 md:pb-0 snap-x snap-mandatory scrollbar-none -mx-4 px-4 md:mx-0 md:px-0">
+          {categories.map((c, i) => {
+            const Icon = categoryIcons[i % categoryIcons.length] ?? Cpu;
+            return (
+              <Link
+                key={c.slug}
+                to="/category/$slug"
+                params={{ slug: c.slug }}
+                className="glass-card group relative flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border border-white/80 bg-white/70 p-3.5 sm:p-4 lg:p-5 shadow-[0_4px_20px_-2px_rgba(12,32,68,0.06),inset_0_1px_0_0_rgba(255,255,255,0.95)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/50 hover:bg-white/90 hover:shadow-xl snap-start shrink-0 w-[60vw] xs:w-[48vw] sm:w-[38vw] md:w-auto"
+              >
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />
+
+                <div>
+                  <div className="grid size-10 sm:size-12 place-items-center rounded-xl sm:rounded-2xl border border-white/30 bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-md transition-all duration-300 group-hover:scale-105">
+                    <Icon className="size-5 sm:size-5.5" aria-hidden />
+                  </div>
+                  <h3 className="mt-3 sm:mt-4 font-display text-sm sm:text-base font-bold leading-snug tracking-tight text-foreground transition-colors group-hover:text-primary">
+                    {c.name}
+                  </h3>
+                  <p className="mt-1 sm:mt-1.5 text-[11px] sm:text-xs text-muted-foreground leading-relaxed line-clamp-2">{c.tagline}</p>
+                </div>
+                <div className="mt-4 sm:mt-5 flex items-center justify-between border-t border-slate-200/50 pt-2.5 sm:pt-3">
+                  <span className="text-[11px] sm:text-xs font-bold text-primary">Explore</span>
+                  <ArrowRight className="size-3.5 text-primary transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Explore All Categories CTA Button */}
+        <div className="mt-7 sm:mt-9 flex justify-center">
+          <Link
+            to="/shop"
+            className="apple-btn-primary inline-flex min-h-11 sm:min-h-12 items-center justify-center gap-2 rounded-full px-7 sm:px-9 text-xs sm:text-sm font-bold shadow-lg transition-all hover:scale-105 active:scale-95"
+          >
+            <span>Explore All Categories</span>
+            <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        </div>
+      </section>
+
+      {/* 4. Category Rails */}
+      {categories.map((c) => {
+        const catItems = allProducts.filter((p) => p.category === c.slug).slice(0, 6);
+        return <CategoryRail key={c.slug} category={c} products={catItems} />;
+      })}
+
+      {/* 5. New Arrivals */}
+      <section className="py-8 sm:py-12 lg:py-16">
+        <div className="container-page">
+          <div className="flex items-center justify-between gap-4 pb-4 sm:pb-6">
+            <div>
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-white/80 bg-white/70 px-3 py-0.5 text-xs font-extrabold uppercase tracking-[0.2em] text-primary shadow-xs backdrop-blur-md">
+                <Sparkles className="size-3.5" />
+                Fresh Stock
+              </div>
+              <h2 className="mt-2 font-display text-xl sm:text-3xl font-extrabold tracking-tight text-foreground">
+                New Arrivals
+              </h2>
+            </div>
+            <Link
+              to="/shop"
+              className="apple-btn-glass inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs font-bold text-foreground hover:text-primary"
+            >
+              Browse All <ArrowRight className="size-3.5 text-primary" aria-hidden />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+            {newArrivals.map((p) => (
+              <ProductCard key={p.slug} product={p} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Solutions Section */}
+      <section id="solutions" className="container-page py-8 sm:py-12 lg:py-16">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/15 bg-[#0A192F]/90 p-5 sm:p-10 lg:p-14 text-white shadow-2xl backdrop-blur-2xl">
+          <div className="pointer-events-none absolute -top-24 -right-24 size-80 rounded-full bg-blue-500/25 blur-3xl" aria-hidden />
+          <div className="pointer-events-none absolute -bottom-24 -left-24 size-80 rounded-full bg-cyan-400/20 blur-3xl" aria-hidden />
+
+          <div className="relative z-10 max-w-2xl">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-[0.2em] text-sky-300 backdrop-blur-md">
+              Engineering Support
+            </span>
+            <h2 className="mt-3 font-display text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
+              Solutions for Makers, Engineers & Businesses
+            </h2>
+            <p className="mt-2.5 text-xs sm:text-base leading-relaxed text-slate-300/90">
+              LASERTRONICS PVT LTD supplies and supports electronics projects end to end • component sourcing, bulk pricing and technical guidance from experts.
+            </p>
+          </div>
+
+          <div className="relative z-10 mt-8 sm:mt-10 grid gap-3.5 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            {solutionsList.map((s) => (
+              <div
+                key={s.title}
+                className="group rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur-md transition-all duration-300 hover:border-sky-400/40 hover:bg-white/10 hover:shadow-lg"
+              >
+                <div className="mb-3.5 size-2.5 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]" />
+                <h3 className="text-sm sm:text-base font-bold text-white transition-colors group-hover:text-sky-300">
+                  {s.title}
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-300/80">{s.copy}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="relative z-10 mt-7 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <Link
+              to="/contact"
+              className="apple-btn-primary inline-flex min-h-11 sm:min-h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full px-7 sm:px-8 text-xs sm:text-sm font-bold shadow-lg text-center"
+            >
+              Talk to Our Engineering Team <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Why Choose Us */}
+      <section className="container-page py-8 sm:py-12 lg:py-16">
+        <div className="text-center">
+          <span className="inline-block rounded-full border border-white/80 bg-white/70 px-3.5 py-1 text-xs font-extrabold uppercase tracking-[0.2em] text-primary shadow-xs backdrop-blur-md">
+            Why Lasertronics
+          </span>
+          <h2 className="mt-2 font-display text-xl sm:text-3xl font-extrabold tracking-tight text-foreground">
+            Why Choose Us
+          </h2>
+          <p className="mx-auto mt-1.5 max-w-xl text-xs text-muted-foreground sm:text-sm">
+            Built for Sri Lankan engineers, technicians, makers, and businesses.
+          </p>
+        </div>
+
+        <div className="mt-7 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5">
+          {whyChooseUsList.map((item) => (
+            <div
+              key={item.title}
+              className="glass-card group flex items-start gap-3.5 sm:gap-4 rounded-2xl border border-white/80 bg-white/70 p-4 sm:p-5 shadow-[0_4px_20px_-2px_rgba(12,32,68,0.05),inset_0_1px_0_0_rgba(255,255,255,0.95)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:bg-white/90 hover:shadow-md"
+            >
+              <div className="grid size-11 sm:size-12 shrink-0 place-items-center rounded-2xl border border-blue-200/50 bg-gradient-to-br from-blue-500/15 via-sky-400/10 to-transparent text-primary shadow-xs transition-transform duration-300 group-hover:scale-105">
+                <item.icon className="size-5 sm:size-6" aria-hidden />
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base font-bold tracking-tight text-foreground/90">{item.title}</h3>
+                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 8. Customer Testimonials */}
+      <section className="container-page py-8 sm:py-12 lg:py-16">
+        <div className="text-center">
+          <span className="inline-block rounded-full border border-white/80 bg-white/70 px-3.5 py-1 text-xs font-extrabold uppercase tracking-[0.2em] text-primary shadow-xs backdrop-blur-md">
+            Customer Feedback
+          </span>
+          <h2 className="mt-2 font-display text-xl sm:text-3xl font-extrabold tracking-tight text-foreground">
+            What Our Customers Say
+          </h2>
+        </div>
+
+        <div className="mt-7 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-5">
+          {testimonials.map((t) => (
+            <div
+              key={t.name}
+              className="glass-card flex flex-col justify-between rounded-2xl sm:rounded-3xl border border-white/80 bg-white/75 p-5 sm:p-6 shadow-[0_4px_20px_-2px_rgba(12,32,68,0.06),inset_0_1px_0_0_rgba(255,255,255,0.95)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+            >
+              <div>
+                <div className="flex gap-1 text-amber-400">
+                  {Array.from({ length: t.rating }).map((_, i) => (
+                    <Star key={i} className="size-3.5 sm:size-4 fill-amber-400" />
+                  ))}
+                </div>
+                <p className="mt-3.5 sm:mt-4 text-xs sm:text-sm leading-relaxed text-foreground/80 italic">
+                  "{t.review}"
+                </p>
+              </div>
+              <div className="mt-5 sm:mt-6 flex items-center gap-2.5 border-t border-slate-200/60 pt-3.5 sm:pt-4">
+                <CheckCircle2 className="size-4 sm:size-4.5 text-primary" />
+                <div>
+                  <h4 className="text-xs sm:text-sm font-bold text-foreground">{t.name}</h4>
+                  <p className="text-[10px] sm:text-[11px] text-muted-foreground">{t.role}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </SiteLayout>
+  );
+}
